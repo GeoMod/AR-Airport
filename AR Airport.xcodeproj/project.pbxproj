@@ -14,6 +14,8 @@
 		189E81EE21C3F88700423405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 189E81ED21C3F88700423405 /* Assets.xcassets */; };
 		189E81F121C3F88700423405 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189E81EF21C3F88700423405 /* LaunchScreen.storyboard */; };
 		189E81FC21C3F88700423405 /* AR_AirportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E81FB21C3F88700423405 /* AR_AirportTests.swift */; };
+		189E820721C44CA300423405 /* AirplaneNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E820621C44CA300423405 /* AirplaneNodes.swift */; };
+		189E820921C457E500423405 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E820821C457E500423405 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		189E81F721C3F88700423405 /* AR AirportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR AirportTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189E81FB21C3F88700423405 /* AR_AirportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_AirportTests.swift; sourceTree = "<group>"; };
 		189E81FD21C3F88700423405 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		189E820621C44CA300423405 /* AirplaneNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirplaneNodes.swift; sourceTree = "<group>"; };
+		189E820821C457E500423405 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 			children = (
 				189E81E421C3F88600423405 /* AppDelegate.swift */,
 				189E81E621C3F88600423405 /* art.scnassets */,
+				189E820821C457E500423405 /* Model.swift */,
+				189E820621C44CA300423405 /* AirplaneNodes.swift */,
 				189E81E821C3F88600423405 /* ViewController.swift */,
 				189E81EA21C3F88600423405 /* Main.storyboard */,
 				189E81ED21C3F88700423405 /* Assets.xcassets */,
@@ -201,8 +207,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189E820721C44CA300423405 /* AirplaneNodes.swift in Sources */,
 				189E81E921C3F88600423405 /* ViewController.swift in Sources */,
 				189E81E521C3F88600423405 /* AppDelegate.swift in Sources */,
+				189E820921C457E500423405 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
