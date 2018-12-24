@@ -8,6 +8,7 @@
 
 import UIKit
 import SceneKit
+import SpriteKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
@@ -18,6 +19,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
     var arrowPositions = [SCNVector3]()
     
+    let aircraft = AirplaneNodes()
+    var controlsScene: AircraftControls!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +30,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
         
+        controlsScene = AircraftControls(size: self.view.bounds.size)
+        sceneView.overlaySKScene = controlsScene
         sceneView.scene.rootNode.addChildNode(arrow)
+        
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,6 +48,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
+    
+    
 
     var gameHasStarted = false
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
@@ -60,7 +67,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     // MARK: - ARSCNViewDelegate
-//
 //    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
 //        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
 //        let extent = planeAnchor.extent
@@ -85,17 +91,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if gameHasStarted {
             print("Start game.")
         } else {
-            let aircraft = AirplaneNodes()
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
             airportScene.position = arrow.position
             airportScene.eulerAngles.y = angle
-            gameHasStarted = true
+            
             sceneView.scene.rootNode.addChildNode(airportScene)
             arrow.removeFromParentNode()
             
             aircraft.addAircraft()
             aircraft.position = arrow.position
             sceneView.scene.rootNode.addChildNode(aircraft)
+            
+            gameHasStarted = true
         }
     }
     
@@ -114,6 +121,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+
     }
 }

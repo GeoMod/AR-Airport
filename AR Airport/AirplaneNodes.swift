@@ -11,9 +11,9 @@ import SceneKit
 class AirplaneNodes: SCNNode {
     
     func addAircraft() {
-        guard let piper = SCNScene(named: "art.scnassets/787.scn") else { return }
+        guard let boeing = SCNScene(named: "art.scnassets/787.scn") else { return }
         let node = SCNNode()
-        for airplane in piper.rootNode.childNodes {
+        for airplane in boeing.rootNode.childNodes {
             node.addChildNode(airplane)
         }
         addChildNode(node)
