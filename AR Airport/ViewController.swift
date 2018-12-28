@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var arrowPositions = [SCNVector3]()
     
     let aircraft = AirplaneNodes()
-    var controlsScene: AircraftControls!
+    var overlayScene: AircraftControls!
     
     
     override func viewDidLoad() {
@@ -30,8 +30,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
         
-        controlsScene = AircraftControls(size: self.view.bounds.size)
-        sceneView.overlaySKScene = controlsScene
+        // Overlay Scene
+        overlayScene = AircraftControls(size: view.bounds.size)
+        overlayScene.scaleMode = .aspectFill
+        overlayScene.isUserInteractionEnabled = false
+        sceneView.overlaySKScene = overlayScene
+        sceneView.backgroundColor = UIColor.white
+                
         sceneView.scene.rootNode.addChildNode(arrow)
         
     }
@@ -49,6 +54,37 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameHasStarted {
+            print("Start game.")
+        } else {
+            guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
+            airportScene.position = arrow.position
+            airportScene.eulerAngles.y = angle
+            
+            sceneView.scene.rootNode.addChildNode(airportScene)
+            arrow.removeFromParentNode()
+            
+            aircraft.addAircraft()
+            aircraft.position = arrow.position
+            sceneView.scene.rootNode.addChildNode(aircraft)
+            
+            gameHasStarted = true
+        }
+    }
+    
+    var position: CGFloat = 0.0
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touches moved")
+        let currentTouch = touches.first
+        let location = currentTouch?.location(in: overlayScene.throttleColumnNode).y
+        if let touch = location {
+            position += touch
+        }
+        
+        overlayScene.throttleHandleNode.position.y = position
+    }
     
 
     var gameHasStarted = false
@@ -84,30 +120,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //        sceneView.scene.rootNode.addChildNode(node)
 //    }
     
-    
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if gameHasStarted {
-            print("Start game.")
-        } else {
-            guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
-            airportScene.position = arrow.position
-            airportScene.eulerAngles.y = angle
-            
-            sceneView.scene.rootNode.addChildNode(airportScene)
-            arrow.removeFromParentNode()
-            
-            aircraft.addAircraft()
-            aircraft.position = arrow.position
-            sceneView.scene.rootNode.addChildNode(aircraft)
-            
-            gameHasStarted = true
-        }
-    }
-    
-    
-
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user

@@ -23,21 +23,24 @@ class AircraftControls: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
-        backgroundColor = UIColor.white
-        
+        setUpScene()
+    }
+    
+    
+    func setUpScene() {
+        let sceneSize = CGSize(width: size.width, height: size.height)
         
         throttleColumnNode = SKSpriteNode(imageNamed: "Column")
         throttleHandleNode = SKSpriteNode(imageNamed: "Handle")
         yokeNode = SKSpriteNode(imageNamed: "Yoke")
         
-        let sceneSize = size.width/10
-        throttleColumnNode.position = CGPoint(x: sceneSize + 12, y: sceneSize + 20)
+        throttleColumnNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        throttleColumnNode.position = CGPoint(x: sceneSize.width * 0.125, y: sceneSize.height * 0.5)
         throttleColumnNode.zPosition = -1
         
         throttleHandleNode.position = CGPoint(x: throttleColumnNode.position.x, y: 15)
-
-//        yokeNode.size = CGSize(width: spriteWidth, height: spriteHeight)
-        yokeNode.position = CGPoint(x: sceneSize + 250, y: sceneSize + 2)
+        
+        yokeNode.position = CGPoint(x: sceneSize.width * 0.75, y: sceneSize.height * 0.5)
         
         addChild(yokeNode)
         addChild(throttleHandleNode)
