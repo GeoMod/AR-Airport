@@ -22,13 +22,31 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <gestureRecognizers/>
                             </arscnView>
+                            <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FH-r7-gNi">
+                                <rect key="frame" x="20" y="609" width="104" height="107"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="bOF-k5-w2d"/>
+                                    <constraint firstAttribute="height" constant="107" id="ubn-qI-Cm9"/>
+                                </constraints>
+                            </skView>
+                            <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N4o-yS-14T">
+                                <rect key="frame" x="290" y="609" width="104" height="107"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="BmP-At-c1Y"/>
+                                    <constraint firstAttribute="height" constant="107" id="fNj-Pl-Tyr"/>
+                                </constraints>
+                            </skView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="4FH-r7-gNi" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="9hd-u9-Cvq"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="4FH-r7-gNi" secondAttribute="bottom" constant="20" id="TWA-jT-rdI"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="N4o-yS-14T" secondAttribute="bottom" constant="20" id="gpX-zL-G1b"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="N4o-yS-14T" secondAttribute="trailing" constant="20" id="rDa-yL-UuF"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>

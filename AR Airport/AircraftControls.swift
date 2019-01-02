@@ -34,13 +34,14 @@ class AircraftControls: SKScene {
         throttleHandleNode = SKSpriteNode(imageNamed: "Handle")
         yokeNode = SKSpriteNode(imageNamed: "Yoke")
         
+        print("throttle size: \(throttleColumnNode.size)")
         throttleColumnNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        throttleColumnNode.position = CGPoint(x: sceneSize.width * 0.125, y: sceneSize.height * 0.5)
+        throttleColumnNode.position = CGPoint(x: sceneSize.width * 0.125, y: 63)
         throttleColumnNode.zPosition = -1
         
-        throttleHandleNode.position = CGPoint(x: throttleColumnNode.position.x, y: 15)
+        throttleHandleNode.position = CGPoint(x: throttleColumnNode.position.x, y: throttleColumnNode.position.y / 2)
         
-        yokeNode.position = CGPoint(x: sceneSize.width * 0.75, y: sceneSize.height * 0.5)
+        yokeNode.position = CGPoint(x: sceneSize.width * 0.75, y: 63)
         
         addChild(yokeNode)
         addChild(throttleHandleNode)

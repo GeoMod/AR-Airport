@@ -30,13 +30,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
         
-        // Overlay Scene
-        overlayScene = AircraftControls(size: view.bounds.size)
-        overlayScene.scaleMode = .aspectFill
-        overlayScene.isUserInteractionEnabled = false
-        sceneView.overlaySKScene = overlayScene
-        sceneView.backgroundColor = UIColor.white
-                
         sceneView.scene.rootNode.addChildNode(arrow)
         
     }
@@ -69,21 +62,49 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             aircraft.addAircraft()
             aircraft.position = arrow.position
             sceneView.scene.rootNode.addChildNode(aircraft)
+            addControls()
             
             gameHasStarted = true
         }
     }
     
-    var position: CGFloat = 0.0
+    func addControls() {
+        // Overlay Scene
+        overlayScene = AircraftControls(size: view.bounds.size)
+        overlayScene.scaleMode = .aspectFill
+        overlayScene.isUserInteractionEnabled = false
+        sceneView.overlaySKScene = overlayScene
+        sceneView.backgroundColor = UIColor.white
+    }
+    
+    var handlePositions = [CGFloat]()
+    var yokePositions = [CGFloat]()
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Touches moved")
+        var handleAverage = CGFloat()
         let currentTouch = touches.first
-        let location = currentTouch?.location(in: overlayScene.throttleColumnNode).y
-        if let touch = location {
-            position += touch
+        let throttleHandePosition = currentTouch?.location(in: overlayScene.throttleColumnNode).y
+        let yokePosition = currentTouch?.location(in: overlayScene.yokeNode).y
+        
+        if let touch = throttleHandePosition {
+            handlePositions.append(touch)
+            let lastTen = handlePositions.suffix(10)
+            for i in lastTen {
+                handleAverage += i
+                overlayScene.throttleHandleNode.position.y = handleAverage / 10
+            }
         }
         
-        overlayScene.throttleHandleNode.position.y = position
+        var yokeAverage = CGFloat()
+        if let touch = yokePosition {
+            yokePositions.append(touch)
+            let lastTen = yokePositions.suffix(10)
+            for i in lastTen {
+                yokeAverage += i
+                overlayScene.yokeNode.position.y = yokeAverage / 10
+                overlayScene.yokeNode.position.x = yokeAverage / 5
+            }
+        }
+        
     }
     
 
