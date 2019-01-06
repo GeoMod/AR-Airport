@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18334C2721CC500400681497 /* AircraftControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18334C2621CC500400681497 /* AircraftControls.swift */; };
+		185DE09B21E10B5D00DC72F1 /* ControlNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DE09A21E10B5D00DC72F1 /* ControlNodes.swift */; };
 		189E81E521C3F88600423405 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E81E421C3F88600423405 /* AppDelegate.swift */; };
 		189E81E721C3F88600423405 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 189E81E621C3F88600423405 /* art.scnassets */; };
 		189E81E921C3F88600423405 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E81E821C3F88600423405 /* ViewController.swift */; };
@@ -30,7 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18334C2621CC500400681497 /* AircraftControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftControls.swift; sourceTree = "<group>"; };
+		185DE09A21E10B5D00DC72F1 /* ControlNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlNodes.swift; sourceTree = "<group>"; };
 		189E81E121C3F88600423405 /* AR Airport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Airport.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189E81E421C3F88600423405 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		189E81E621C3F88600423405 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 				189E81E621C3F88600423405 /* art.scnassets */,
 				189E820821C457E500423405 /* Model.swift */,
 				189E820621C44CA300423405 /* AirplaneNodes.swift */,
+				185DE09A21E10B5D00DC72F1 /* ControlNodes.swift */,
 				189E81E821C3F88600423405 /* ViewController.swift */,
-				18334C2621CC500400681497 /* AircraftControls.swift */,
 				189E81EA21C3F88600423405 /* Main.storyboard */,
 				189E81ED21C3F88700423405 /* Assets.xcassets */,
 				189E81EF21C3F88700423405 /* LaunchScreen.storyboard */,
@@ -214,7 +214,7 @@
 				189E81E921C3F88600423405 /* ViewController.swift in Sources */,
 				189E81E521C3F88600423405 /* AppDelegate.swift in Sources */,
 				189E820921C457E500423405 /* Model.swift in Sources */,
-				18334C2721CC500400681497 /* AircraftControls.swift in Sources */,
+				185DE09B21E10B5D00DC72F1 /* ControlNodes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

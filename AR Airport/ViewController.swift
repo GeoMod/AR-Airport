@@ -14,15 +14,15 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    var center: CGPoint!
+    
+    let aircraft = AirplaneNodes()
+    
     let arrow = SCNScene(named: "art.scnassets/rings.scn")!.rootNode
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
     var arrowPositions = [SCNVector3]()
     
-    let aircraft = AirplaneNodes()
-    var overlayScene: AircraftControls!
     
-    
+    var center: CGPoint!
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
@@ -62,50 +62,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             aircraft.addAircraft()
             aircraft.position = arrow.position
             sceneView.scene.rootNode.addChildNode(aircraft)
-            addControls()
             
             gameHasStarted = true
         }
     }
     
-    func addControls() {
-        // Overlay Scene
-        overlayScene = AircraftControls(size: view.bounds.size)
-        overlayScene.scaleMode = .aspectFill
-        overlayScene.isUserInteractionEnabled = false
-        sceneView.overlaySKScene = overlayScene
-        sceneView.backgroundColor = UIColor.white
-    }
-    
-    var handlePositions = [CGFloat]()
-    var yokePositions = [CGFloat]()
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var handleAverage = CGFloat()
-        let currentTouch = touches.first
-        let throttleHandePosition = currentTouch?.location(in: overlayScene.throttleColumnNode).y
-        let yokePosition = currentTouch?.location(in: overlayScene.yokeNode).y
-        
-        if let touch = throttleHandePosition {
-            handlePositions.append(touch)
-            let lastTen = handlePositions.suffix(10)
-            for i in lastTen {
-                handleAverage += i
-                overlayScene.throttleHandleNode.position.y = handleAverage / 10
-            }
-        }
-        
-        var yokeAverage = CGFloat()
-        if let touch = yokePosition {
-            yokePositions.append(touch)
-            let lastTen = yokePositions.suffix(10)
-            for i in lastTen {
-                yokeAverage += i
-                overlayScene.yokeNode.position.y = yokeAverage / 10
-                overlayScene.yokeNode.position.x = yokeAverage / 5
-            }
-        }
-        
-    }
     
 
     var gameHasStarted = false
