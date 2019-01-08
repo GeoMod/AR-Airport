@@ -1,24 +1,24 @@
 //
-//  ControlNodes.swift
+//  ControlScene.swift
 //  AR Airport
 //
-//  Created by Daniel O'Leary on 1/5/19.
+//  Created by Daniel O'Leary on 1/7/19.
 //  Copyright © 2019 Impulse Coupled Dev. All rights reserved.
 //
 
 import SpriteKit
 
-class ControlNodes: SKScene {
+class ControlScene: SKScene {
     
     let yokeBase = SKSpriteNode(imageNamed: "yokeBase")
     let controlYoke = SKSpriteNode(imageNamed: "yoke")
     
-    
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.black
+        backgroundColor = SKColor.white
+        backgroundColor.withAlphaComponent(0.8)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        yokeBase.position = CGPoint(x: 0, y: -200)
+        yokeBase.position = CGPoint(x: 200, y: 0)
         controlYoke.position = yokeBase.position
         
         addChild(yokeBase)
@@ -75,5 +75,4 @@ class ControlNodes: SKScene {
             controlYoke.run(moveYokeToCenter)
         }
     }
-    
 }

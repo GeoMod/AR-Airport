@@ -14,6 +14,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var subView: SKView!
     
     let aircraft = AirplaneNodes()
     
@@ -31,7 +32,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.automaticallyUpdatesLighting = true
         
         sceneView.scene.rootNode.addChildNode(arrow)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,11 +63,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             aircraft.position = arrow.position
             sceneView.scene.rootNode.addChildNode(aircraft)
             
+            loadControls()
             gameHasStarted = true
         }
     }
     
-    
+    func loadControls() {
+        if let scene = SKScene(fileNamed: "ControlScene") {
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            // Present the scene
+            subView.presentScene(scene)
+        }
+    }
+
 
     var gameHasStarted = false
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
