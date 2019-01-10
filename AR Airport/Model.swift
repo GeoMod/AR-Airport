@@ -9,7 +9,6 @@
 import SceneKit
 
 
-
 func getAveragePosition(from positions: ArraySlice<SCNVector3>) -> SCNVector3 {
     var averageX = Float()
     var averageY = Float()
@@ -26,4 +25,16 @@ func getAveragePosition(from positions: ArraySlice<SCNVector3>) -> SCNVector3 {
     
     // Send this for the position of the pointer arrow. Averaged from the last 10 given positons for smoother indications.
     return SCNVector3Make(averageX/count, averageY/count, averageZ/count)
+}
+
+
+func getThrottlePosition(yPosition position: CGFloat, frameHeight: CGFloat) -> CGFloat {
+    var throttlePosition = (position + (frameHeight * 0.5)) / frameHeight
+    if throttlePosition < 0 {
+        throttlePosition = 0
+    } else if throttlePosition > 1 {
+        throttlePosition = 1
+    }
+    
+    return throttlePosition
 }

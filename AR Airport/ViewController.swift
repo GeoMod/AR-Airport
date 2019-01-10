@@ -21,9 +21,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     let arrow = SCNScene(named: "art.scnassets/rings.scn")!.rootNode
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
     var arrowPositions = [SCNVector3]()
-    
-    
     var center: CGPoint!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
@@ -50,7 +50,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameHasStarted {
-            print("Start game.")
+            // game has started
         } else {
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
             airportScene.position = arrow.position
@@ -72,6 +72,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if let scene = SKScene(fileNamed: "ControlScene") {
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
+            scene.backgroundColor = SKColor.clear
+            
             // Present the scene
             subView.presentScene(scene)
         }

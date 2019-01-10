@@ -12,36 +12,48 @@ class ControlScene: SKScene {
     
     let yokeBase = SKSpriteNode(imageNamed: "yokeBase")
     let controlYoke = SKSpriteNode(imageNamed: "yoke")
+    let throttleBase = SKSpriteNode(imageNamed: "throttleBase")
+    let throttleColumn = SKSpriteNode(imageNamed: "column")
+    let throttleHandle = SKSpriteNode(imageNamed: "throttleHandle")
+    
     
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.white
-        backgroundColor.withAlphaComponent(0.8)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         yokeBase.position = CGPoint(x: 200, y: 0)
         controlYoke.position = yokeBase.position
+        throttleBase.position = CGPoint(x: -200, y: 0)
+        
+        throttleColumn.position = throttleBase.position
+        throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: throttleColumn.frame.minY)
         
         addChild(yokeBase)
         addChild(controlYoke)
+        addChild(throttleBase)
+        addChild(throttleColumn)
+        addChild(throttleHandle)
     }
     
     var didTouchYoke = false
+    var didTouchThrottle = false
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
             
             if controlYoke.frame.contains(location) {
                 didTouchYoke = true
+            } else if throttleHandle.frame.contains(location) {
+                didTouchThrottle = true
             } else {
                 didTouchYoke = false
+                didTouchThrottle = false
             }
         }
     }
     
-    
+    var throttlePercentage = CGFloat()
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if didTouchYoke {
-            
             for touch in touches {
                 let location = touch.location(in: self)
                 
@@ -60,9 +72,23 @@ class ControlScene: SKScene {
                 } else {
                     controlYoke.position = CGPoint(x: yokeBase.position.x - xDistance, y: yokeBase.position.y + yDistance)
                 }
-                
-                // Move the plane
+                // Apply pitch and roll
             }
+        }
+        
+        if didTouchThrottle {
+            for touch in touches {
+                let location = touch.location(in: self)
+                
+                if throttleBase.frame.contains(location) {
+                    throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: location.y)
+                    print("\(throttlePercentage)")
+            
+                    throttlePercentage = getThrottlePosition(yPosition: throttleHandle.position.y, frameHeight: throttleColumn.frame.height)
+                }
+            }
+            
+            // Apply thrust
         }
     }
     

@@ -87,9 +87,9 @@
 		189E81E321C3F88600423405 /* AR Airport */ = {
 			isa = PBXGroup;
 			children = (
-				189E81E421C3F88600423405 /* AppDelegate.swift */,
 				189D787021E3BA7A000CDF91 /* ControlScene.sks */,
 				189E81E621C3F88600423405 /* art.scnassets */,
+				189E81E421C3F88600423405 /* AppDelegate.swift */,
 				189E820821C457E500423405 /* Model.swift */,
 				189E820621C44CA300423405 /* AirplaneNodes.swift */,
 				189D786E21E3B862000CDF91 /* ControlScene.swift */,
