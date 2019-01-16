@@ -30,10 +30,10 @@ func getAveragePosition(from positions: ArraySlice<SCNVector3>) -> SCNVector3 {
 
 func getThrottlePosition(yPosition position: CGFloat, frameHeight: CGFloat) -> CGFloat {
     var throttlePosition = (position + (frameHeight * 0.5)) / frameHeight
-    if throttlePosition < 0 {
-        throttlePosition = 0
-    } else if throttlePosition > 1 {
-        throttlePosition = 1
+    if throttlePosition < 0.0 {
+        throttlePosition = 0.0
+    } else if throttlePosition > 1.0 {
+        throttlePosition = 1.0
     }
     
     return throttlePosition

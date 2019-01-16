@@ -95,6 +95,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    let controlScene = ControlScene()
+    
+    func pitchAndRoll() {
+        
+        let pitchUP = SCNAction.moveBy(x: controlScene.controlYoke.position.x , y: controlScene.controlYoke.position.y, z: 0, duration: 5)
+        
+        let airplane = sceneView.scene.rootNode.childNode(withName: "airplane", recursively: true)
+        airplane?.runAction(pitchUP)
+        
+    }
+    
+    
+    
     // MARK: - ARSCNViewDelegate
 //    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
 //        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }

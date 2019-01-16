@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+
 class ControlScene: SKScene {
     
     let yokeBase = SKSpriteNode(imageNamed: "yokeBase")
@@ -16,13 +17,16 @@ class ControlScene: SKScene {
     let throttleColumn = SKSpriteNode(imageNamed: "column")
     let throttleHandle = SKSpriteNode(imageNamed: "throttleHandle")
     
+    var throttlePercentage = CGFloat()
+    var didTouchYoke = false
+    var didTouchThrottle = false
     
     override func didMove(to view: SKView) {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        yokeBase.position = CGPoint(x: 200, y: 0)
+        yokeBase.position = CGPoint(x: 250, y: 0)
         controlYoke.position = yokeBase.position
-        throttleBase.position = CGPoint(x: -200, y: 0)
+        throttleBase.position = CGPoint(x: -250, y: 0)
         
         throttleColumn.position = throttleBase.position
         throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: throttleColumn.frame.minY)
@@ -34,15 +38,16 @@ class ControlScene: SKScene {
         addChild(throttleHandle)
     }
     
-    var didTouchYoke = false
-    var didTouchThrottle = false
+    var throttleTouch = [UITouch]()
+    var controlTouch =  [UITouch]()
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
             
             if controlYoke.frame.contains(location) {
                 didTouchYoke = true
-            } else if throttleHandle.frame.contains(location) {
+            } else if throttleBase.frame.contains(location) {
                 didTouchThrottle = true
             } else {
                 didTouchYoke = false
@@ -51,7 +56,7 @@ class ControlScene: SKScene {
         }
     }
     
-    var throttlePercentage = CGFloat()
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if didTouchYoke {
             for touch in touches {
@@ -73,6 +78,7 @@ class ControlScene: SKScene {
                     controlYoke.position = CGPoint(x: yokeBase.position.x - xDistance, y: yokeBase.position.y + yDistance)
                 }
                 // Apply pitch and roll
+                
             }
         }
         
@@ -82,13 +88,12 @@ class ControlScene: SKScene {
                 
                 if throttleBase.frame.contains(location) {
                     throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: location.y)
-                    print("\(throttlePercentage)")
-            
                     throttlePercentage = getThrottlePosition(yPosition: throttleHandle.position.y, frameHeight: throttleColumn.frame.height)
+                    print("\(throttlePercentage)")
                 }
             }
-            
             // Apply thrust
+            
         }
     }
     
@@ -101,4 +106,36 @@ class ControlScene: SKScene {
             controlYoke.run(moveYokeToCenter)
         }
     }
+    
+    
+    
+    
 }
+
+
+/* Earlier attempt, does not work.
+ for touch in touches {
+ let location = touch.location(in: self)
+ 
+ // MARK: Refactoring Throttle Handle to allow multi-touch.
+ throttleTouch.append(touch)
+ if let last = throttleTouch.last {
+ let lastY = last.location(in: self).y
+ throttleHandle.position.y = lastY
+ throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: lastY)
+ // Intent is to allow movement of only throttle handle when the throttle handle is moved.
+ // This movement should not affect control handle movement.
+ // And vice versa.
+ }
+ 
+ if throttleBase.frame.contains(location) {
+ throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: location.y)
+ throttlePercentage = getThrottlePosition(yPosition: throttleHandle.position.y, frameHeight: throttleColumn.frame.height)
+ print("\(throttlePercentage)")
+ }
+ }
+ 
+ // Apply thrust
+ }
+ 
+ */

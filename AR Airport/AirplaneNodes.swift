@@ -15,6 +15,7 @@ class AirplaneNodes: SCNNode {
         let node = SCNNode()
         for airplane in boeing.rootNode.childNodes {
             node.addChildNode(airplane)
+            node.name = "airplane"
         }
         addChildNode(node)
     }
