@@ -52,21 +52,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if gameHasStarted {
             // game has started
         } else {
-            airplane = AirplaneNode()
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
+            let anchor = ARAnchor(transform: anchorTransform)
+
             airportScene.position = arrow.position
             airportScene.eulerAngles.y = angle
-            
-            let anchor = ARAnchor(transform: anchorTransform)
             sceneView.session.add(anchor: anchor)
-            airplane?.position = arrow.position
-            
-            sceneView.scene.rootNode.addChildNode(airplane!)
             sceneView.scene.rootNode.addChildNode(airportScene)
             arrow.removeFromParentNode()
-            
-            loadControls()
             gameHasStarted = true
+            loadControls()
         }
     }
     
@@ -100,19 +95,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if airplane == nil{
-            airplane = AirplaneNode()
-            airplane?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
-            node.addChildNode(airplane!)
-            print("WE GOT IT")
+        if gameHasStarted {
+            if airplane == nil{
+                airplane = AirplaneNode()
+                airplane?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
+                sceneView.scene.rootNode.addChildNode(airplane!)
+                node.addChildNode(airplane!)
+                print("WE GOT IT")
+            }
         }
     }
     
     
     let controls = ControlScene()
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        node.childNode(withName: "787", recursively: true)
-        node.eulerAngles = SCNVector3(90, 90, -1)
+        node.position = arrow.position
+//        node.childNode(withName: "787", recursively: true)
+//        node.eulerAngles = SCNVector3(180, 90, -10)
         
 //        let action = SCNAction.moveBy(x: controls.controlYoke.position.x, y: controls.controlYoke.position.y, z: 0, duration: 1.0)
         
