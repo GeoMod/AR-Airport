@@ -7,16 +7,14 @@
 //
 
 import UIKit
-import SceneKit
-import SpriteKit
 import ARKit
+import SceneKit
+
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var subView: SKView!
-    
-    let aircraft = AirplaneNodes()
     
     let arrow = SCNScene(named: "art.scnassets/rings.scn")!.rootNode
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
@@ -47,26 +45,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    
+    var gameHasStarted = false
+    var airplane: AirplaneNode?
+    var anchorTransform = simd_float4x4()
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameHasStarted {
             // game has started
         } else {
+            airplane = AirplaneNode()
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
             airportScene.position = arrow.position
             airportScene.eulerAngles.y = angle
             
+            let anchor = ARAnchor(transform: anchorTransform)
+            sceneView.session.add(anchor: anchor)
+            airplane?.position = arrow.position
+            
+            sceneView.scene.rootNode.addChildNode(airplane!)
             sceneView.scene.rootNode.addChildNode(airportScene)
             arrow.removeFromParentNode()
-            
-            aircraft.addAircraft()
-            aircraft.position = arrow.position
-            sceneView.scene.rootNode.addChildNode(aircraft)
             
             loadControls()
             gameHasStarted = true
         }
     }
+    
     
     func loadControls() {
         if let scene = SKScene(fileNamed: "ControlScene") {
@@ -78,14 +81,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             subView.presentScene(scene)
         }
     }
-
-
-    var gameHasStarted = false
+    
+    
+    // MARK: - ARSCNViewDelegate
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if !gameHasStarted {
             let hitTest = sceneView.hitTest(center, types: .existingPlaneUsingExtent)
             let restult = hitTest.last
-            guard let transform = restult?.worldTransform else { return }
+            guard let transform = restult?.worldTransform  else { return }
+            anchorTransform = transform
             let thirdColumn = transform.columns.3
             let position = SCNVector3Make(thirdColumn.x, thirdColumn.y, thirdColumn.z)
             arrowPositions.append(position)
@@ -95,36 +99,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    let controlScene = ControlScene()
-    
-    func pitchAndRoll() {
-        
-        let pitchUP = SCNAction.moveBy(x: controlScene.controlYoke.position.x , y: controlScene.controlYoke.position.y, z: 0, duration: 5)
-        
-        let airplane = sceneView.scene.rootNode.childNode(withName: "airplane", recursively: true)
-        airplane?.runAction(pitchUP)
-        
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if airplane == nil{
+            airplane = AirplaneNode()
+            airplane?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
+            node.addChildNode(airplane!)
+            print("WE GOT IT")
+        }
     }
     
     
+    let controls = ControlScene()
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        node.childNode(withName: "787", recursively: true)
+        node.eulerAngles = SCNVector3(90, 90, -1)
+        
+//        let action = SCNAction.moveBy(x: controls.controlYoke.position.x, y: controls.controlYoke.position.y, z: 0, duration: 1.0)
+        
+        node.eulerAngles.x = Float(controls.controlYoke.position.x)
+        node.position.y = Float(controls.controlYoke.position.y)
+    }
     
-    // MARK: - ARSCNViewDelegate
-//    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-//        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-//        let extent = planeAnchor.extent
-//        let planeGeometry = SCNPlane(width: CGFloat(extent.x), height: CGFloat(extent.y))
-//        planeGeometry.firstMaterial?.colorBufferWriteMask = []
-//        planeGeometry.firstMaterial?.isDoubleSided = true
-//        
-//        guard let airportNode = node.childNode(withName: "Tower", recursively: false) else { return }
-//        guard let runwayNode = node.childNode(withName: "Runway", recursively: false) else { return }
-//        node.addChildNode(airportNode)
-//        node.addChildNode(runwayNode)
-//
-//        let center = planeAnchor.center
-//        node.position = SCNVector3Make(center.x, 0, center.z)
-//        sceneView.scene.rootNode.addChildNode(node)
-//    }
+    
     
     
     func session(_ session: ARSession, didFailWithError error: Error) {

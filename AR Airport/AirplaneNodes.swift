@@ -8,16 +8,26 @@
 
 import SceneKit
 
-class AirplaneNodes: SCNNode {
+class AirplaneNode: SCNNode {
     
-    func addAircraft() {
-        guard let boeing = SCNScene(named: "art.scnassets/787.scn") else { return }
-        let node = SCNNode()
-        for airplane in boeing.rootNode.childNodes {
-            node.addChildNode(airplane)
-            node.name = "airplane"
-        }
-        addChildNode(node)
+    override init() {
+        super.init()
+        
+        // Main airplane scene
+        guard let boeingScene = SCNScene(named: "art.scnassets/787.scn") else { return }
+        
+        // Nodes
+        guard let airplaneNode = boeingScene.rootNode.childNode(withName: "787", recursively: true) else { return }
+        
+        addChildNode(airplaneNode)
     }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
 }
 

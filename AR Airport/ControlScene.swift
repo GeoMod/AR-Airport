@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import SceneKit
 
 class ControlScene: SKScene {
     
@@ -20,6 +20,8 @@ class ControlScene: SKScene {
     var throttlePercentage = CGFloat()
     var didTouchYoke = false
     var didTouchThrottle = false
+    var touchDegrees: CGFloat?
+    
     
     override func didMove(to view: SKView) {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -64,8 +66,9 @@ class ControlScene: SKScene {
                 
                 let vector = CGVector(dx: location.x - yokeBase.position.x, dy: location.y - yokeBase.position.y)
                 let angle = atan2(vector.dy, vector.dx)
-                let touchDegrees = angle * CGFloat(180 / Double.pi)
-                print(touchDegrees + 180)
+                touchDegrees = angle * CGFloat(180 / Double.pi)
+                // Use touchDegrees + 180 to possibly be the output of the control. It represents logical output numbers.
+//                print(touchDegrees + 180)
                 
                 let lengthFromBase = yokeBase.frame.size.height / 2
                 
@@ -78,7 +81,6 @@ class ControlScene: SKScene {
                     controlYoke.position = CGPoint(x: yokeBase.position.x - xDistance, y: yokeBase.position.y + yDistance)
                 }
                 // Apply pitch and roll
-                
             }
         }
         
@@ -96,6 +98,7 @@ class ControlScene: SKScene {
             
         }
     }
+
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -109,33 +112,7 @@ class ControlScene: SKScene {
     
     
     
-    
 }
 
 
-/* Earlier attempt, does not work.
- for touch in touches {
- let location = touch.location(in: self)
- 
- // MARK: Refactoring Throttle Handle to allow multi-touch.
- throttleTouch.append(touch)
- if let last = throttleTouch.last {
- let lastY = last.location(in: self).y
- throttleHandle.position.y = lastY
- throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: lastY)
- // Intent is to allow movement of only throttle handle when the throttle handle is moved.
- // This movement should not affect control handle movement.
- // And vice versa.
- }
- 
- if throttleBase.frame.contains(location) {
- throttleHandle.position = CGPoint(x: throttleColumn.position.x, y: location.y)
- throttlePercentage = getThrottlePosition(yPosition: throttleHandle.position.y, frameHeight: throttleColumn.frame.height)
- print("\(throttlePercentage)")
- }
- }
- 
- // Apply thrust
- }
- 
- */
+
