@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
     var arrowPositions = [SCNVector3]()
     var center: CGPoint!
-    
+    var gameHasStarted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    var gameHasStarted = false
+    
     var airplane: AirplaneNode?
     var anchorTransform = simd_float4x4()
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -101,14 +101,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 airplane?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
                 sceneView.scene.rootNode.addChildNode(airplane!)
                 node.addChildNode(airplane!)
-                print("WE GOT IT")
             }
         }
     }
     
     
-    let controls = ControlScene()
+    
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        let controls = ControlScene()
         node.position = arrow.position
 //        node.childNode(withName: "787", recursively: true)
 //        node.eulerAngles = SCNVector3(180, 90, -10)
@@ -124,7 +124,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
-        
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
