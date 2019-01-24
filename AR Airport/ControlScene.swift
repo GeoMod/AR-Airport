@@ -40,8 +40,6 @@ class ControlScene: SKScene {
         addChild(throttleHandle)
     }
     
-    var throttleTouch = [UITouch]()
-    var controlTouch =  [UITouch]()
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
@@ -59,6 +57,7 @@ class ControlScene: SKScene {
     }
     
     
+    let airplane = AirplaneNode()
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if didTouchYoke {
             for touch in touches {
@@ -95,7 +94,6 @@ class ControlScene: SKScene {
                 }
             }
             // Apply thrust
-            
         }
     }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1851F2C121F7D01900026A6E /* ViewController+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1851F2C021F7D01900026A6E /* ViewController+ARSCNViewDelegate.swift */; };
 		189D786F21E3B862000CDF91 /* ControlScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D786E21E3B862000CDF91 /* ControlScene.swift */; };
 		189D787121E3BA7A000CDF91 /* ControlScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 189D787021E3BA7A000CDF91 /* ControlScene.sks */; };
 		189E81E521C3F88600423405 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E81E421C3F88600423405 /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1851F2C021F7D01900026A6E /* ViewController+ARSCNViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSCNViewDelegate.swift"; sourceTree = "<group>"; };
 		189D786E21E3B862000CDF91 /* ControlScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlScene.swift; sourceTree = "<group>"; };
 		189D787021E3BA7A000CDF91 /* ControlScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ControlScene.sks; sourceTree = "<group>"; };
 		189E81E121C3F88600423405 /* AR Airport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Airport.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 				189E820621C44CA300423405 /* AirplaneNodes.swift */,
 				189D786E21E3B862000CDF91 /* ControlScene.swift */,
 				189E81E821C3F88600423405 /* ViewController.swift */,
+				1851F2C021F7D01900026A6E /* ViewController+ARSCNViewDelegate.swift */,
 				189E81EA21C3F88600423405 /* Main.storyboard */,
 				189E81ED21C3F88700423405 /* Assets.xcassets */,
 				189E81EF21C3F88700423405 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1851F2C121F7D01900026A6E /* ViewController+ARSCNViewDelegate.swift in Sources */,
 				189E820721C44CA300423405 /* AirplaneNodes.swift in Sources */,
 				189E81E921C3F88600423405 /* ViewController.swift in Sources */,
 				189E81E521C3F88600423405 /* AppDelegate.swift in Sources */,
