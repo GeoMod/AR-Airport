@@ -20,7 +20,7 @@ class ControlScene: SKScene {
     var throttlePercentage = CGFloat()
     var didTouchYoke = false
     var didTouchThrottle = false
-    var touchDegrees: CGFloat?
+    
     
     
     override func didMove(to view: SKView) {
@@ -57,7 +57,6 @@ class ControlScene: SKScene {
     }
     
     
-    let airplane = AirplaneNode()
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if didTouchYoke {
             for touch in touches {
@@ -67,7 +66,6 @@ class ControlScene: SKScene {
                 let angle = atan2(vector.dy, vector.dx)
                 touchDegrees = angle * CGFloat(180 / Double.pi)
                 // Use touchDegrees + 180 to possibly be the output of the control. It represents logical output numbers.
-//                print(touchDegrees + 180)
                 
                 let lengthFromBase = yokeBase.frame.size.height / 2
                 
@@ -80,6 +78,7 @@ class ControlScene: SKScene {
                     controlYoke.position = CGPoint(x: yokeBase.position.x - xDistance, y: yokeBase.position.y + yDistance)
                 }
                 // Apply pitch and roll
+                
             }
         }
         

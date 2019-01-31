@@ -18,9 +18,16 @@ class ViewController: UIViewController {
     
     let arrow = SCNScene(named: "art.scnassets/rings.scn")!.rootNode
     let airportScene = SCNScene(named: "art.scnassets/runway.scn")!.rootNode
+    
     var arrowPositions = [SCNVector3]()
     var center: CGPoint!
     var gameHasStarted = false
+    var controlScene: ControlScene!
+    
+    var airplane: AirplaneNode?
+    var airplaneAnchor: ARAnchor?
+    var anchorTransform: simd_float4x4!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +43,7 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-        configuration.isLightEstimationEnabled = true
+        configuration.environmentTexturing = .automatic
         sceneView.session.run(configuration)
     }
     
@@ -46,18 +53,19 @@ class ViewController: UIViewController {
     }
     
     
-    var airplane: AirplaneNode?
-    var anchorTransform = simd_float4x4()
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameHasStarted {
             // game has started
         } else {
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
-            let anchor = ARAnchor(transform: anchorTransform)
 
             airportScene.position = arrow.position
             airportScene.eulerAngles.y = angle
-            sceneView.session.add(anchor: anchor)
+            
+
+            // MARK: IF the user taps the screen before an anchor can be placed, the app will crash here.
+            airplaneAnchor = ARAnchor(transform: anchorTransform)
+            sceneView.session.add(anchor: airplaneAnchor!)
             sceneView.scene.rootNode.addChildNode(airportScene)
             arrow.removeFromParentNode()
             gameHasStarted = true
