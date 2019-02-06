@@ -22,8 +22,8 @@ class ViewController: UIViewController {
     var arrowPositions = [SCNVector3]()
     var center: CGPoint!
     var gameHasStarted = false
-    var controlScene: ControlScene!
     
+    var controlScene: ControlScene!
     var airplane: AirplaneNode?
     var airplaneAnchor: ARAnchor?
     var anchorTransform: simd_float4x4!
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
             airportScene.eulerAngles.y = angle
             
 
-            // MARK: IF the user taps the screen before an anchor can be placed, the app will crash here.
+            // MARK: If the user taps the screen before an anchor can be placed, the app will crash here.
             airplaneAnchor = ARAnchor(transform: anchorTransform)
             sceneView.session.add(anchor: airplaneAnchor!)
             sceneView.scene.rootNode.addChildNode(airportScene)

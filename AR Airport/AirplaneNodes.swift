@@ -10,6 +10,7 @@ import SceneKit
 
 class AirplaneNode: SCNNode {
     
+    
     override init() {
         super.init()
         

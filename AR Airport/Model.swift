@@ -8,8 +8,8 @@
 
 import SceneKit
 
-var touchDegrees = CGFloat(0)
-
+var touchDegrees: CGFloat = 0
+var throttlePercentage: CGFloat = 0
 
 func getAveragePosition(from positions: ArraySlice<SCNVector3>) -> SCNVector3 {
     var averageX = Float()

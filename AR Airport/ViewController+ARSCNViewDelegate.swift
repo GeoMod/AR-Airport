@@ -37,16 +37,12 @@ extension ViewController: ARSCNViewDelegate {
     
     
 
-    
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let airplaneNode = node.childNode(withName: "787", recursively: true) else { return }
         airplaneNode.eulerAngles.z = Float(touchDegrees) / 10
         
         print("TouchDeg = \(touchDegrees)")
     }
-    
-    
-    
-    
+
     
 }
