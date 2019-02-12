@@ -23,16 +23,16 @@ class ViewController: UIViewController {
     var center: CGPoint!
     var gameHasStarted = false
     
-    var controlScene: ControlScene!
+    var controlScene: ControlScene?
     var airplane: AirplaneNode?
     var airplaneAnchor: ARAnchor?
-    var anchorTransform: simd_float4x4!
+    var anchorTransform: simd_float4x4?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sceneView.delegate = self
         center = view.center
+        sceneView.delegate = self
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
         
@@ -58,13 +58,14 @@ class ViewController: UIViewController {
             // game has started
         } else {
             guard let angle = sceneView.session.currentFrame?.camera.eulerAngles.y else { return }
-
+            
             airportScene.position = arrow.position
             airportScene.eulerAngles.y = angle
-            
 
-            // MARK: If the user taps the screen before an anchor can be placed, the app will crash here.
-            airplaneAnchor = ARAnchor(transform: anchorTransform)
+            guard let transform = anchorTransform else {
+                print("Transform not defined yet, skipping...")
+                return }
+            airplaneAnchor = ARAnchor(transform: transform)
             sceneView.session.add(anchor: airplaneAnchor!)
             sceneView.scene.rootNode.addChildNode(airportScene)
             arrow.removeFromParentNode()

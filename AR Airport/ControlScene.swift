@@ -44,10 +44,13 @@ class ControlScene: SKScene {
             let location = touch.location(in: self)
             if controlYoke.frame.contains(location) {
                 didTouchYoke = true
-            } else if throttleBase.frame.contains(location) {
-                didTouchThrottle = true
             } else {
                 didTouchYoke = false
+            }
+            
+            if throttleBase.frame.contains(location) {
+               didTouchThrottle = true
+            } else {
                 didTouchThrottle = false
             }
         }
@@ -75,6 +78,7 @@ class ControlScene: SKScene {
                     controlYoke.position = CGPoint(x: yokeBase.position.x - xDistance, y: yokeBase.position.y + yDistance)
                 }
                 // Apply pitch and roll
+                print("Yoke positon X: \(controlYoke.position.x)")
             }
         }
         
@@ -88,6 +92,7 @@ class ControlScene: SKScene {
                 }
             }
             // Apply thrust
+            print("Throttle position is \(throttleHandle.position.y)")
         }
     }
     

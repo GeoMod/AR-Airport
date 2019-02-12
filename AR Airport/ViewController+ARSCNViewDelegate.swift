@@ -14,9 +14,9 @@ extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if !gameHasStarted {
             let hitTest = sceneView.hitTest(center, types: .existingPlaneUsingExtent)
-            guard let restult = hitTest.last else { return }
-            anchorTransform = restult.worldTransform
-            let thirdColumn = anchorTransform.columns.3
+            guard let result = hitTest.last else { return }
+            anchorTransform = result.worldTransform
+            let thirdColumn = anchorTransform!.columns.3
             let position = SCNVector3Make(thirdColumn.x, thirdColumn.y, thirdColumn.z)
             arrowPositions.append(position)
             // Average the last 10 positions of the arrow.
@@ -36,12 +36,11 @@ extension ViewController: ARSCNViewDelegate {
     }
     
     
-
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let airplaneNode = node.childNode(withName: "787", recursively: true) else { return }
         airplaneNode.eulerAngles.z = Float(touchDegrees) / 10
         
-        print("TouchDeg = \(touchDegrees)")
+        
     }
 
     
